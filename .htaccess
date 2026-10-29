@@ -1,0 +1,8 @@
+# DB 接続設定ファイル (qrcart-my.cnf など) とログファイルへの直接アクセスを禁止する。
+#
+# qrcart-my.cnf と log/ は本来 Web 公開ディレクトリの外に置くべきものです。
+# このディレクトリが公開ディレクトリの中に置かれてしまった場合の保険として、
+# qrcart-my.cnf と同じディレクトリにこの .htaccess を置いてください (Apache 2.4 以降)。
+<FilesMatch "\.(cnf|cnf\.example|log)$">
+    Require all denied
+</FilesMatch>

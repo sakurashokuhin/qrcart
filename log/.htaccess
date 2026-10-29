@@ -1,0 +1,2 @@
+# ログファイルへの Web からのアクセスを禁止する (Apache 2.4 以降)
+Require all denied

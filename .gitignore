@@ -1,0 +1,17 @@
+# DB 接続設定 (認証情報)
+*.cnf
+*.htpasswd
+
+# 環境ごとの Web サーバー設定 (public/.htaccess.example をコピーして作成)
+/public/.htaccess
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ログ (log/.htaccess だけはリポジトリに含める)
+/log/*
+!/log/.htaccess

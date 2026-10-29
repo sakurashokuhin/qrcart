@@ -1,0 +1,11 @@
+# qrcart MySQL 接続設定
+# このファイルを qrcart-my.cnf にコピーして接続情報を記入してください。
+# Web 公開ディレクトリ (public/) の外に置き、パーミッションは 600 を推奨します。
+# 別の場所に置く場合は環境変数 QRCART_DB_CNF にフルパスを設定してください。
+
+[client]
+host     = 127.0.0.1
+port     = 3306
+user     = qrcart
+password = change-me
+database = qrcart

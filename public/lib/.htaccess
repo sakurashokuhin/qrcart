@@ -1,0 +1,2 @@
+# lib/ 以下への直接アクセスを禁止 (include 経由でのみ使用)
+Require all denied

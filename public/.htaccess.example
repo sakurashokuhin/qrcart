@@ -1,0 +1,54 @@
+# qrcart Apache 設定例
+# このファイルを public/.htaccess にコピーし、環境に合わせて編集してください。
+
+RewriteEngine On
+DirectoryIndex index.php index.html
+
+# ----------------------------------------
+# 1) HTTPS について
+#    HTTP -> HTTPS のリダイレクトは、サーバー側の「常時SSL化」などの設定で
+#    有効にしてください (README の「方法 B: HTTPS 化する」を参照)。
+# ----------------------------------------
+
+# ----------------------------------------
+# 2) 環境変数 (必要な場合のみ。既定値は README の「ログフォルダ」の表を参照)
+# ----------------------------------------
+# 接続設定ファイルの場所 (既定: リポジトリ直下の qrcart-my.cnf)
+# SetEnv QRCART_DB_CNF /path/to/qrcart-my.cnf
+# ログの保存先フォルダ (既定: リポジトリ直下の log/)
+# SetEnv QRCART_LOG_DIR /path/to/log
+# タイムゾーン (既定: Asia/Tokyo)
+# SetEnv QRCART_TIMEZONE Asia/Tokyo
+
+# ----------------------------------------
+# 3) 管理画面 (/admin/) に Basic 認証を掛ける
+#    .htpasswd は Web 公開ディレクトリの外に作成してください:
+#      htpasswd -c -B /home/<ユーザー名>/qrcart.htpasswd admin
+#    詳しい手順は README の「4. 管理画面にパスワードを設定する」を参照。
+#
+#    !!! 下の AuthUserFile を、作成した .htpasswd のフルパスに必ず書き換えてください。
+#    !!! /path/to/... のままだと、管理画面にアクセスしたときに 500 エラーになります。
+# ----------------------------------------
+AuthType Basic
+AuthName "qrcart admin"
+AuthUserFile /path/to/qrcart.htpasswd
+
+<If "%{REQUEST_URI} =~ m#/admin(/|$)#">
+    Require valid-user
+</If>
+
+# 利用者画面も特定の IP からのみ許可したい場合の例:
+# <If "%{REQUEST_URI} !~ m#/admin(/|$)#">
+#     <RequireAny>
+#         Require ip 192.0.2.0/24
+#         Require valid-user
+#     </RequireAny>
+# </If>
+
+# ----------------------------------------
+# 4) 機密ファイルへのアクセス禁止
+# ----------------------------------------
+<FilesMatch "\.(ini|cnf|lock|dist|git|sh|bak|swp|env|sql|yml|yaml|example|sample)$">
+    Require all denied
+</FilesMatch>
+RewriteRule ^\.git(?:/|$) - [F,L,NC]
